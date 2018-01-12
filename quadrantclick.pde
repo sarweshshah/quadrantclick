@@ -1,3 +1,9 @@
+import cc.arduino.*;
+import org.firmata.*;
+
+import processing.serial.*;
+
+Serial bluetoothPort;
 PImage image;
 
 int berries_rect_width = 255;
@@ -16,6 +22,12 @@ void settings() {
 }
 
 void setup() {
+  for (String serial : Serial.list()) {
+    println(serial);
+  }
+
+  bluetoothPort = new Serial(this, Serial.list()[1], 9600);
+
   image = loadImage("toa-heftiba-106427.jpg"); //Load image pathname here
   image.resize(1296, 864);
   image(image, 0, 0);
@@ -53,15 +65,20 @@ void mouseClicked() {
   // Mouse pointing on the berries
   if (mouseX>16 && mouseY>16 && mouseX<271 && mouseY<292) {
     // code to arduino
+    bluetoothPort.write(49);
   } 
 
   // Mouse pointing on the coffee
   else if (mouseX>619 && mouseY>156 && mouseX<1109 && mouseY<609) {
     // code to arduino
+    bluetoothPort.write(50);
   }
 
   // Mouse pointing on the lemon
   else if (mouseX>196 && mouseY>539 && mouseX<610 && mouseY<847) {
     // code to arduino
+    //bluetoothPort.write(115);
+    bluetoothPort.write(51);
+    //bluetoothPort.write(101);
   }
 }
